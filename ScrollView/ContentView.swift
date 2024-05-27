@@ -1,12 +1,3 @@
-//
-//  ContentView.swift
-//  ScrollView
-//
-//  Created by Bruno Silva on 26/05/24.
-//
-
-import UIKit
-
 import UIKit
 
 class ContentView: UIView {
@@ -43,14 +34,6 @@ class ContentView: UIView {
     private func setupContentView() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
-
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
     }
 
     private func addContent() {
@@ -79,16 +62,21 @@ class ContentView: UIView {
         if let lastLabel = previousLabel {
             lastLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         }
+
+        // Constraint de largura para contentView
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        // Constraint de altura mínima para contentView
+        contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor).isActive = true
     }
 
-    func adjustContentSizeForDevice(viewHeight: CGFloat) {
-        // Define a contentSize da scrollView baseado no tamanho calculado do conteúdo
-        setNeedsLayout()
-        layoutIfNeeded()
-        let contentHeight = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        scrollView.contentSize = CGSize(width: frame.width, height: contentHeight)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        adjustContentSizeForDevice(viewHeight: bounds.height)
+    }
 
-        // Se a altura do conteúdo for menor ou igual à altura da view, desativa a rolagem vertical
+    private func adjustContentSizeForDevice(viewHeight: CGFloat) {
+        let contentHeight = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        scrollView.contentSize = CGSize(width: bounds.width, height: contentHeight)
         scrollView.isScrollEnabled = contentHeight > viewHeight
     }
 }
