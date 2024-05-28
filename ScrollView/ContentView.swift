@@ -1,7 +1,6 @@
 import UIKit
 
-class ContentView: UIView {
-
+class CustomScrollView: UIView {
     let scrollView = UIScrollView()
     let contentView = UIView()
 
@@ -9,26 +8,23 @@ class ContentView: UIView {
         super.init(frame: frame)
         setupScrollView()
         setupContentView()
-        addContent()
+        setupSubviews()
+        configureLayout()
+        adjustScrollBehavior()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupScrollView()
         setupContentView()
-        addContent()
+        setupSubviews()
+        configureLayout()
+        adjustScrollBehavior()
     }
 
     private func setupScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(scrollView)
-
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
     }
 
     private func setupContentView() {
@@ -36,47 +32,69 @@ class ContentView: UIView {
         scrollView.addSubview(contentView)
     }
 
-    private func addContent() {
-        // Exemplo de conteúdo adicional: várias labels
-        var previousLabel: UILabel?
+    private func setupSubviews() {
+        var previousView: UIView = contentView
+
         for i in 1...20 {
             let label = UILabel()
-            label.text = "Conteúdo da scroll view \(i)"
+            label.text = "Label \(i)"
+            label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(label)
 
+            let button = UIButton(type: .system)
+            button.setTitle("Button \(i)", for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(button)
+
             NSLayoutConstraint.activate([
+                label.topAnchor.constraint(equalTo: previousView == contentView ? contentView.topAnchor : previousView.bottomAnchor, constant: 20),
                 label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+
+                button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
+                button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
             ])
 
-            if let previous = previousLabel {
-                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 20).isActive = true
-            } else {
-                label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
-            }
-            previousLabel = label
+            previousView = button
         }
 
-        // Constraint para a última label
-        if let lastLabel = previousLabel {
-            lastLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+        NSLayoutConstraint.activate([
+            previousView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+        ])
+    }
+
+    private func configureLayout() {
+        NSLayoutConstraint.activate([
+            // Constraints para UIScrollView
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // Constraints para contentView
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+    }
+
+    private func adjustScrollBehavior() {
+        let screenHeight = UIScreen.main.bounds.height
+
+        if screenHeight > 667 { // iPhone 6/7/8 and smaller (including SE)
+            scrollView.isScrollEnabled = false
+            addConstraintsForLargerDevices()
+        } else {
+            scrollView.isScrollEnabled = true
         }
-
-        // Constraint de largura para contentView
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        // Constraint de altura mínima para contentView
-        contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor).isActive = true
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        adjustContentSizeForDevice(viewHeight: bounds.height)
-    }
-
-    private func adjustContentSizeForDevice(viewHeight: CGFloat) {
-        let contentHeight = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        scrollView.contentSize = CGSize(width: bounds.width, height: contentHeight)
-        scrollView.isScrollEnabled = contentHeight > viewHeight
+    private func addConstraintsForLargerDevices() {
+        NSLayoutConstraint.activate([
+            contentView.heightAnchor.constraint(equalTo: heightAnchor)
+        ])
     }
 }
