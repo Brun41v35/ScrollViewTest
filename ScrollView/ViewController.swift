@@ -1,35 +1,22 @@
-//
-//  ViewController.swift
-//  ScrollView
-//
-//  Created by Bruno Silva on 26/05/24.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
-
-    let contentView = ContentView()
+    let customScrollView = CustomScrollView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupContentView()
+        setupCustomScrollView()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        contentView.adjustContentSizeForDevice(viewHeight: view.frame.height)
-    }
-
-    private func setupContentView() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(contentView)
+    private func setupCustomScrollView() {
+        customScrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customScrollView)
 
         NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            customScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            customScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            customScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            customScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

@@ -15,6 +15,7 @@
 		7E44DC0C2C03FBBC005FE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E44DC0A2C03FBBC005FE6F0 /* LaunchScreen.storyboard */; };
 		7E44DC172C03FBBC005FE6F0 /* ScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E44DC162C03FBBC005FE6F0 /* ScrollViewTests.swift */; };
 		7E44DC302C04004D005FE6F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E44DC2F2C04004D005FE6F0 /* ContentView.swift */; };
+		7E94548D2C056920007EF279 /* OtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E94548C2C056920007EF279 /* OtherViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		7E44DC122C03FBBC005FE6F0 /* ScrollViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E44DC162C03FBBC005FE6F0 /* ScrollViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTests.swift; sourceTree = "<group>"; };
 		7E44DC2F2C04004D005FE6F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7E94548C2C056920007EF279 /* OtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				7E44DC0A2C03FBBC005FE6F0 /* LaunchScreen.storyboard */,
 				7E44DC0D2C03FBBC005FE6F0 /* Info.plist */,
 				7E44DC2F2C04004D005FE6F0 /* ContentView.swift */,
+				7E94548C2C056920007EF279 /* OtherViewController.swift */,
 			);
 			path = ScrollView;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				7E44DC002C03FBBA005FE6F0 /* AppDelegate.swift in Sources */,
 				7E44DC302C04004D005FE6F0 /* ContentView.swift in Sources */,
 				7E44DC022C03FBBA005FE6F0 /* SceneDelegate.swift in Sources */,
+				7E94548D2C056920007EF279 /* OtherViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
